@@ -12,7 +12,9 @@
 # Remove kernel/initrd from boot config.
 
 err=0
-if [ -x /usr/bin/kernel-install ] ; then
+if [ -x /usr/bin/sdbootutil ] ; then
+  sdbootutil remove-kernel "$1" || err=1
+elif [ -x /usr/bin/kernel-install ] ; then
   ( set -x ; kernel-install remove "$1" ) || err=1
 else
   echo "kernel-install: command not found"

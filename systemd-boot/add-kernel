@@ -12,11 +12,12 @@
 # Add kernel/initrd to boot config.
 
 err=0
-if [ -x /usr/bin/kernel-install ] ; then
+if [ -x /usr/bin/sdbootutil ] ; then
+  sdbootutil add-kernel "$1" || err=1
+elif [ -x /usr/bin/kernel-install ] ; then
   version="$1"
   kernel="$2"
   initrd="$3"
-
   if [ -z "$kernel" ] ; then
     for i in vmlinuz Image image vmlinux ; do
       if [ -f "/boot/$i-$version" -a -f "/boot/initrd-$version" ] ; then
